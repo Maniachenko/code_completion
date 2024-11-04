@@ -2,6 +2,7 @@ import os
 import subprocess
 import fnmatch
 import json
+import sys
 
 DATA_DIR = "data"
 
@@ -111,22 +112,16 @@ def merge_json_reports(repo_paths):
 if __name__ == "__main__":
     # Define paths to each repository
     repo_paths = [
-        "../airflow",
-        "../PycharmProjects/sales_telegram_bot/backend/sales_telegram_bot_admin_backend",
-        "../PycharmProjects/sales_telegram_bot/backend/telegram_lambda_package",
-        "../PycharmProjects/sales_telegram_bot/backend/models_app"
     ]
+
+    # Check if repo_paths is populated
+    if not repo_paths:
+        print(
+            "Warning: 'repo_paths' is empty. Please populate it with the paths to the repositories you want to analyze.")
+        sys.exit(1)
 
     # Define patterns to omit from coverage analysis
     omit_patterns = [
-        "*/config-3.py",
-        "*/config.py",
-        "*/_remote_module_non_scriptable.py",
-        "*/_remote_module_non_scriptable.pyc",
-        "*/.cache/*",
-        "*/.huggingface/*",
-        "*/tests/*",
-        "*/test_*.py"
     ]
 
     # Run tests with coverage in each repository path and merge results
