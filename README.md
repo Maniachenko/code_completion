@@ -122,7 +122,7 @@ The metrics_comparison.ipynb notebook is used for evaluating the quality of gene
    - The notebook calculates Spearman and Kendall correlation coefficients between the manual scores and each automated metric to identify which metrics best align with human judgment.
    - Results indicate that BLEU and ROUGE-L have the highest correlations, suggesting that these metrics best capture the similarity aspects valued in the manual evaluations.
   
-## Conclusion:
+## 4. Conclusion:
 
 The code completion results were less accurate than anticipated, with no instances of exact code matches across the generated completions. A closer review revealed that many of the generated middle segments lacked sufficient contextual alignment with the reference, making them unsuitable for more advanced functional evaluations, such as unit tests, which could serve as a definitive quality check in future iterations.
 
