@@ -5,26 +5,34 @@ import pandas as pd
 import numpy as np
 import re
 
+DATA_DIR = "data"
+
+
 def load_coverage_data(coverage_file):
     """Load and parse coverage data from a JSON file."""
     with open(coverage_file, 'r') as f:
         return json.load(f)
 
+
 def is_function_or_class_declaration(line):
     """Check if a line starts a function or class definition."""
     return bool(re.match(r'^\s*(def |class )', line))
+
 
 def is_decorator(line):
     """Check if a line is a decorator."""
     return line.strip().startswith("@")
 
+
 def is_indented(line):
     """Check if a line is indented, indicating it may belong to a previous block."""
     return line.startswith("    ")  # Adjust according to your code indentation style
 
+
 def get_indentation_level(line):
     """Return the indentation level of a line."""
     return len(line) - len(line.lstrip())
+
 
 def contains_function_definition_with_body(lines):
     """Check if there is at least one function definition followed by an indented body."""
@@ -34,6 +42,7 @@ def contains_function_definition_with_body(lines):
             if i + 1 < len(lines) and is_indented(lines[i + 1]):
                 return True
     return False
+
 
 def randomly_select_middle_section(file_lines, executed_lines, min_middle=1, max_middle=10):
     """Randomly select a middle section from executed lines, biased towards the center,
@@ -77,6 +86,7 @@ def randomly_select_middle_section(file_lines, executed_lines, min_middle=1, max
     # Return None if we couldn't select a valid middle section after multiple attempts
     return None
 
+
 def split_code(file_lines, middle_lines):
     """Split the code into prefix, middle, and suffix based on selected executed and middle lines."""
     prefix = [line for i, line in enumerate(file_lines, 1) if i < min(middle_lines)]
@@ -88,6 +98,7 @@ def split_code(file_lines, middle_lines):
         return None, None, None  # Return None if the prefix doesn't have a function with a body
 
     return "".join(prefix), "".join(middle), "".join(suffix)
+
 
 def generate_random_examples(coverage_data, num_examples=50, max_retries=100):
     """Generates random examples from the coverage data with retries for valid splits."""
@@ -130,15 +141,17 @@ def generate_random_examples(coverage_data, num_examples=50, max_retries=100):
 
     return examples
 
+
 def save_examples_to_csv(examples, output_file):
     """Save the examples to a CSV file."""
     df = pd.DataFrame(examples)
     df.to_csv(output_file, index=False)
     print(f"Saved {len(examples)} examples to {output_file}")
 
+
 if __name__ == "__main__":
-    coverage_file = "combined_coverage.json"  # JSON file with coverage data
-    output_file = "code_completion_examples.csv"  # Output CSV file
+    coverage_file = os.path.join(DATA_DIR, "combined_coverage.json")  # JSON file with coverage data
+    output_file = os.path.join(DATA_DIR, "code_completion_examples.csv")  # Output CSV file
     num_examples = 50  # Target number of examples
 
     # Load coverage data
@@ -147,5 +160,5 @@ if __name__ == "__main__":
     # Generate random examples by reusing files and sections with retry logic
     examples = generate_random_examples(coverage_data, num_examples)
 
-    # Save the results to a CSV file
+    # Save the results to a CSV file in the data directory
     save_examples_to_csv(examples, output_file)
