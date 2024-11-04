@@ -112,11 +112,11 @@ The metrics_comparison.ipynb notebook is used for evaluating the quality of gene
 
 3. **Automated Metric Calculation**:
    - The notebook calculates several metrics to compare the generated code against the reference middle code section, except for ChrF, which compares the full code blocks. The metrics include:
-            * Exact Match: Binary metric that checks for identical matches.
-            * BLEU: Measures n-gram overlap, with smoothing to handle cases with fewer matches.
-            * ROUGE-L: Focuses on the longest common subsequence to capture structural similarity.
-            * METEOR: Evaluates both exact matches and semantic similarity through stemming.
-            * ChrF: Character-level metric that compares entire code blocks, useful for evaluating structural variations.
+     * Exact Match: Binary metric that checks for identical matches.
+     * BLEU: Measures n-gram overlap, with smoothing to handle cases with fewer matches.
+     * ROUGE-L: Focuses on the longest common subsequence to capture structural similarity.
+     * METEOR: Evaluates both exact matches and semantic similarity through stemming.
+     * ChrF: Character-level metric that compares entire code blocks, useful for evaluating structural variations.
 
 4. **Correlation Analysis**:
    - The notebook calculates Spearman and Kendall correlation coefficients between the manual scores and each automated metric to identify which metrics best align with human judgment.
