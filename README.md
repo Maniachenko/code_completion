@@ -111,7 +111,7 @@ The metrics_comparison.ipynb notebook is used for evaluating the quality of gene
         The manual score is then appended to the dataset.
 
 3. **Automated Metric Calculation**:
-   - The notebook calculates several metrics to compare the generated code against the reference middle code section. The metrics include:
+   - The notebook calculates several metrics to compare the generated code against the reference middle code section, except for ChrF, which compares the full code blocks. The metrics include:
             * Exact Match: Binary metric that checks for identical matches.
             * BLEU: Measures n-gram overlap, with smoothing to handle cases with fewer matches.
             * ROUGE-L: Focuses on the longest common subsequence to capture structural similarity.
